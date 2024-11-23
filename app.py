@@ -1,9 +1,19 @@
 from flask import Flask, request, render_template
 import pickle
 import numpy as np
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, Render!"
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port)
+
 
 # Load the pre-trained model (replace 'cancer.pkl' with your actual file path)
 with open('cancer.pkl', 'rb') as model_file:
