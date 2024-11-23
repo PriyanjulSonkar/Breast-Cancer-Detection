@@ -11,9 +11,7 @@ def home():
     return "Hello, Render!"
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port)
-
+    port = int(10000)  # Default to 5000 if PORT is not set
 
 # Load the pre-trained model (replace 'cancer.pkl' with your actual file path)
 with open('cancer.pkl', 'rb') as model_file:
