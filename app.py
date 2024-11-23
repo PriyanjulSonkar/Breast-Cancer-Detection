@@ -6,8 +6,6 @@ import os
 # Initialize Flask app
 app = Flask(__name__)
 
-def home():
-    return "Hello, Render!"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT is not set
