@@ -2,16 +2,6 @@ from flask import Flask, request, render_template
 import pickle
 import numpy as np
 import os
-from flask import Flask
-
-
-@app.route("/")
-def home():
-    return "Hello, Render!"
-
-if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port)
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -28,8 +18,8 @@ def home():
 # Define the route for predictions
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Extract input values from the form
     try:
+        # Extract input values from the form
         features = [
             float(request.form['concavity_worst']),
             float(request.form['compactness_worst']),
@@ -57,5 +47,8 @@ def predict():
     return render_template('index.html', diagnosis=diagnosis)
 
 # Run the app
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    # Retrieve the PORT environment variable or use the default port 5000 for local testing
+    port = int(os.environ.get("PORT", 10000))
+    # Run the app on all available network interfaces
+    app.run(host="0.0.0.0", port=port)
