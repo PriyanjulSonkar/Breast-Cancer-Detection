@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection Prediction</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+    background-image: url('/static/images/b2.avif'); /* Use the local image */
+    background-size: contain;
+    background-position: center center;
+    background-attachment: fixed;
+    padding-top: 50px;
+    color: white;
+}
+
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 1); /* Opaque background to make text visible */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-submit:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .alert-custom {
+            margin-top: 20px;
+        }
+
+        .btn-clear {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-clear:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .btn-clear:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+        }
+
+        .form-row input {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        label {
+            color: #333; /* Ensure label text is visible */
+        }
+
+        .result-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .result-link:hover {
+            color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .learn-more {
+            color: #28a745; /* Green color for the text */
+        }
+
+        .learn-more-link {
+            color: #28a745; /* Green color for the link */
+            font-weight: bold;
+        }
+
+        .learn-more-link:hover {
+            color: #218838; /* Darker green when hovered */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Breast Cancer Detection Prediction</h1>
+        
+        <!-- Form to input the features -->
+        <form action="/predict" method="POST" id="cancer-form">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="concavity_worst">Concavity Worst:</label>
+                        <input type="text" class="form-control" id="concavity_worst" name="concavity_worst" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="compactness_worst">Compactness Worst:</label>
+                        <input type="text" class="form-control" id="compactness_worst" name="compactness_worst" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="symmetry_worst">Symmetry Worst:</label>
+                        <input type="text" class="form-control" id="symmetry_worst" name="symmetry_worst" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="concavity_mean">Concavity Mean:</label>
+                        <input type="text" class="form-control" id="concavity_mean" name="concavity_mean" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="texture_worst">Texture Worst:</label>
+                        <input type="text" class="form-control" id="texture_worst" name="texture_worst" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="concave_points_worst">Concave Points Worst:</label>
+                        <input type="text" class="form-control" id="concave_points_worst" name="concave_points_worst" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="perimeter_mean">Perimeter Mean:</label>
+                        <input type="text" class="form-control" id="perimeter_mean" name="perimeter_mean" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="smoothness_worst">Smoothness Worst:</label>
+                        <input type="text" class="form-control" id="smoothness_worst" name="smoothness_worst" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="concave_points_mean">Concave Points Mean:</label>
+                        <input type="text" class="form-control" id="concave_points_mean" name="concave_points_mean" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="compactness_mean">Compactness Mean:</label>
+                        <input type="text" class="form-control" id="compactness_mean" name="compactness_mean" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-submit btn-block">Submit</button>
+        </form>
+
+        {% if diagnosis %}
+            <div class="result alert alert-info">
+                Diagnosis: <strong>{{ diagnosis }}</strong>
+            </div>
+            <div class="result">
+                {% if diagnosis == "Malignant" %}
+                    <p class="learn-more">To learn more about malignant breast cancer, please visit the following link:</p>
+                    <a href="https://en.wikipedia.org/wiki/Malignant_breast_cancer" target="_blank" class="learn-more-link">Learn More About Malignant Breast Cancer</a>
+                {% else %}
+                    <p class="learn-more">To learn more about benign breast cancer, please visit the following link:</p>
+                    <a href="https://en.wikipedia.org/wiki/Benign_breast_disease" target="_blank" class="learn-more-link">Learn More About Benign Breast Disease</a>
+                {% endif %}
+            </div>
+            <!-- Clear Result Button -->
+            <button type="button" class="btn btn-clear btn-block" onclick="clearResult()">Clear Result</button>
+        {% endif %}
+        
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Number Validation -->
+    <script>
+        document.getElementById("cancer-form").addEventListener("submit", function(event) {
+            // Get all input fields
+            let inputs = document.querySelectorAll("input");
+            let valid = true;
+
+            // Check each input to ensure it's a number
+            inputs.forEach(function(input) {
+                // Check if input contains a valid number
+                if (isNaN(input.value) || input.value === '') {
+                    alert("Please enter valid numbers for all fields.");
+                    valid = false;
+                    return;
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        function clearResult() {
+            var resultDiv = document.querySelector('.result');
+            var formInputs = document.querySelectorAll('input');
+            var resultLink = document.querySelector('.learn-more-link');
+            var learnMoreText = document.querySelector('.learn-more');
+
+            // Clear result text and link
+            if (resultDiv) resultDiv.style.display = 'none';
+            if (resultLink) resultLink.style.display = 'none';
+            if (learnMoreText) learnMoreText.style.display = 'none';
+
+            // Reset form inputs
+            formInputs.forEach(function(input) {
+                input.value = '';
+                input.style.borderColor = ''; // Reset border color
+            });
+            window.location.href = '/';
+        }
+    </script>
+
+</body>
+</html>
